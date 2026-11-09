@@ -162,3 +162,22 @@ main { margin-left: 25vw; padding: 0 var(--gut); }
   .ptext, .bio { font-size: 15px; line-height: 1.45; }
 }
 @media (max-width: 767px) { .ptext .lbl { font-size: 12px; } }
+
+/* 8 nov 2026 · índice de casos (referente Phipps: una imagen grande por caso) */
+.index { padding: 8px 0 40px; }
+.index-h { font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; opacity: .7; margin: 0 0 12px; }
+.cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.card { color: inherit; text-decoration: none; display: block; }
+.card img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block; }
+.card span { display: block; margin-top: 8px; font-size: 15px; font-weight: 700; line-height: 1.25; }
+.card:hover span { text-decoration: underline; }
+.grid.c3 img { aspect-ratio: 3 / 4; object-fit: cover; }
+@media (max-width: 767px) { .cards { grid-template-columns: 1fr 1fr; gap: 10px; } .card span { font-size: 13px; } }
+
+/* 8 nov 2026 · espaciado uniforme: entre dos piezas seguidas, el mismo hueco de la rejilla (6 px); pie pegado a su pieza */
+@media (min-width: 768px) {
+  .solo img { width: 100%; max-height: none; margin: 0; }
+  .solo.tall img { width: 62%; margin: 0 auto; }
+}
+.right > :is(.solo, .grid, .slideshow) + :is(.solo, .grid, .slideshow) { margin-top: var(--gap); }
+.right > :is(.solo, .grid, .slideshow) + .cap { margin-top: 15px; }
