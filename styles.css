@@ -136,48 +136,43 @@ main { margin-left: 25vw; padding: 0 var(--gut); }
   .slideshow button { width: 26px; height: 38px; padding: 6px 7px; background: rgba(37, 37, 87, .35); }
 }
 
-/* 7 nov 2026 · evaluación director creativo: imagen protagonista (~1000 px a 1440), cabecera arriba y no fija */
-@media (min-width: 768px) {
-  .left { position: static; width: auto; height: auto; max-width: 980px; padding: 32px var(--gut) 8px; overflow: visible; }
-  .bio { max-width: 640px; }
-  main { margin-left: 0; }
-  .project { grid-template-columns: minmax(260px, 24vw) 1fr; padding: 40px 0 56px; border-top: 1px solid rgba(37,37,87,.12); }
-  .ptitle { font-size: 28px; }
-}
-@media (min-width: 768px) {
-  .solo img { width: auto; max-width: 100%; max-height: 82vh; margin: 0 auto; }
-}
-
-/* 8 nov 2026 · rúbrica UK: jerarquía tipográfica de la web y rótulos fijos por caso */
-.ptext .lbl { display: block; font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 4px; opacity: .7; -webkit-text-stroke: 0; }
-.tags { font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; }
-@media (min-width: 768px) {
-  .name { font-size: 56px; line-height: 1.05; letter-spacing: -0.01em; }
-  .role { font-size: 20px; margin-top: 6px; }
-  .bio, .ptext, .pmeta { font-size: 16px; line-height: 1.45; }
-  .ptitle { font-size: 30px; }
-}
-@media (max-width: 767px) {
-  .name { font-size: 36px; line-height: 1.1; }
-  .ptext, .bio { font-size: 15px; line-height: 1.45; }
-}
-@media (max-width: 767px) { .ptext .lbl { font-size: 12px; } }
-
-/* 8 nov 2026 · índice de casos (referente Phipps: una imagen grande por caso) */
-.index { padding: 8px 0 40px; }
-.index-h { font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; opacity: .7; margin: 0 0 12px; }
-.cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-.card { color: inherit; text-decoration: none; display: block; }
-.card img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block; }
-.card span { display: block; margin-top: 8px; font-size: 15px; font-weight: 700; line-height: 1.25; }
-.card:hover span { text-decoration: underline; }
+/* 25 nov 2026 · vuelta al diseño de cargo: barra lateral fija, texto a la izquierda, piezas a la derecha.
+   Se retiran las capas del 7-9 nov (cabecera arriba, índice de tarjetas, títulos de 56 px, etiquetas en mayúsculas). */
+.solo.tall img { width: 62%; }
 .grid.c3 img { aspect-ratio: 3 / 4; object-fit: cover; }
-@media (max-width: 767px) { .cards { grid-template-columns: 1fr 1fr; gap: 10px; } .card span { font-size: 13px; } }
-
-/* 8 nov 2026 · espaciado uniforme: entre dos piezas seguidas, el mismo hueco de la rejilla (6 px); pie pegado a su pieza */
-@media (min-width: 768px) {
-  .solo img { width: 100%; max-height: none; margin: 0; }
-  .solo.tall img { width: 62%; margin: 0 auto; }
-}
 .right > :is(.solo, .grid, .slideshow) + :is(.solo, .grid, .slideshow) { margin-top: var(--gap); }
 .right > :is(.solo, .grid, .slideshow) + .cap { margin-top: 15px; }
+
+@media (min-width: 768px) {
+  .left { position: fixed; top: 0; left: 0; width: calc(var(--gut) + min(25vw - 24px, 278px)); height: 100vh; overflow-y: auto; max-width: none; padding: 23px 0 var(--gut) var(--gut); }
+  main { margin-left: 25vw; }
+  .project { grid-template-columns: calc(25vw - 31.5px) 1fr; }
+}
+.card { color: inherit; text-decoration: none; display: block; }
+.card img { width: 100%; object-fit: cover; }
+.card:hover span { text-decoration: underline; }
+.index-h { font-size: var(--fs-body); font-weight: 700; margin: 0 0 10px; }
+.left .card img { aspect-ratio: auto; height: auto; }
+
+/* Índice sutil: miniaturas al pie de la columna izquierda, sin títulos visibles */
+@media (min-width: 768px) {
+  .left { display: flex; flex-direction: column; }
+  .left .index { margin-top: auto; padding: var(--line) 0 0; }
+}
+@media (max-width: 767px) { .left .index { margin-top: 24px; } }
+.left .index-h { display: none; }
+.left .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.left .card { display: block; }
+.left .card img { width: 100%; aspect-ratio: 4 / 3; height: auto; object-fit: cover; opacity: .9; transition: opacity .15s; }
+.left .card:hover img, .left .card:focus-visible img { opacity: 1; }
+.left .card span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.ptext .lbl { display: block; font-size: var(--fs-body); font-weight: 700; margin-bottom: 1px; -webkit-text-stroke: 0; }
+/* miniaturas con nombre: 2 columnas, pie pequeño y discreto */
+.left .cards { grid-template-columns: 1fr 1fr; gap: 10px 8px; }
+.left .card span { position: static; width: auto; height: auto; overflow: visible; clip: auto; white-space: normal;
+  display: block; margin-top: 3px; font-size: 11.5px; line-height: 1.25; font-weight: 500; opacity: .8; }
+.left .card:hover span { opacity: 1; text-decoration: underline; }
+
+/* miniaturas más chicas: 3 por fila, nombre en 2 líneas */
+.left .cards { grid-template-columns: repeat(3, 1fr); gap: 8px 6px; }
+.left .card span { font-size: 10.5px; line-height: 1.2; }
