@@ -5,7 +5,8 @@
   if (intro) {
     if (reduce0) { intro.remove(); document.documentElement.classList.remove('intro-hold'); }
     else {
-      document.documentElement.classList.add('intro-on');
+      document.documentElement.classList.add('intro-on'); window.scrollTo(0, 0);
+      intro.addEventListener('touchmove', function (e) { e.preventDefault(); }, { passive: false });
       var dot = intro.querySelector('.i-dot');
       var place = function () {
         if (!dot) return;
