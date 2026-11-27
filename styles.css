@@ -236,3 +236,18 @@ main { margin-left: 25vw; padding: 0 var(--gut); }
 @media (prefers-reduced-motion: reduce) { .left .card img { transition: none; } .intro { display: none; } }
 
 @media (min-width: 768px) { .left .role { letter-spacing: -.012em; } }
+
+/* 27 nov: flechas con el círculo de la marca (relleno azul, anillo crema por dentro, nunca se recorta) */
+.slideshow button { width: 44px; height: 44px; padding: 0; border-radius: 50%; background: var(--ink); color: var(--page);
+  box-shadow: inset 0 0 0 3px var(--ink), inset 0 0 0 4.5px var(--page); display: grid; place-items: center; transition: transform .2s ease; }
+.slideshow button:hover { background: var(--ink); transform: translateY(-50%) scale(1.06); }
+.slideshow button:active { transform: translateY(-50%) scale(.96); }
+.slideshow button svg { width: 46%; height: 46%; overflow: visible; stroke-width: 2; }
+.slideshow .prev { left: 12px; } .slideshow .next { right: 12px; }
+@media (max-width: 767px) {
+  .slideshow button { width: 34px; height: 34px; padding: 0; background: var(--ink); box-shadow: inset 0 0 0 2.5px var(--ink), inset 0 0 0 3.5px var(--page); }
+  .slideshow .prev { left: 8px; } .slideshow .next { right: 8px; }
+  /* "View work" alineado con el borde inferior de la primera pantalla */
+  .left .bio { display: flex; flex-direction: column; min-height: calc(100svh - var(--introTop, 116px)); }
+  .left .bio .jump { margin-top: auto; padding: 24px 0 28px; }
+}
