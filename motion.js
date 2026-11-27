@@ -30,7 +30,7 @@
         setTimeout(function () { document.documentElement.classList.remove('intro-on'); intro.remove(); }, 1450);
       };
       var started = false;
-      var go = function () { if (started) return; started = true; intro.classList.add('go'); setTimeout(end, 2600); };
+      var go = function () { if (started) return; started = true; intro.classList.add('go'); setTimeout(end, 3000); };
       var ready = function () {
         var start = function () { requestAnimationFrame(function () { requestAnimationFrame(go); }); };
         if (document.visibilityState === 'visible') start();
