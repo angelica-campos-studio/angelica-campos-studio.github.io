@@ -18,13 +18,18 @@
       var done = false;
       var end = function () {
         if (done) return; done = true;
-        intro.style.transition = 'none'; place(); void intro.offsetWidth; intro.style.transition = '';
+        place();
+        var cs = intro.style, x = cs.getPropertyValue('--dx'), y = cs.getPropertyValue('--dy');
+        intro.style.clipPath = 'circle(' + cs.getPropertyValue('--dr') + ' at ' + x + ' ' + y + ')';
+        void intro.offsetWidth;
+        intro.style.transition = 'clip-path .9s cubic-bezier(.7,0,.2,1) .45s';
+        intro.style.clipPath = 'circle(0px at ' + x + ' ' + y + ')';
         document.documentElement.classList.remove('intro-hold');
         intro.classList.add('out'); document.documentElement.classList.add('reveal');
-        setTimeout(function () { document.documentElement.classList.remove('intro-on'); intro.remove(); }, 1150);
+        setTimeout(function () { document.documentElement.classList.remove('intro-on'); intro.remove(); }, 1450);
       };
       var started = false;
-      var go = function () { if (started) return; started = true; intro.classList.add('go'); setTimeout(end, 3200); };
+      var go = function () { if (started) return; started = true; intro.classList.add('go'); setTimeout(end, 3700); };
       var ready = function () {
         var start = function () { requestAnimationFrame(function () { requestAnimationFrame(go); }); };
         if (document.visibilityState === 'visible') start();
