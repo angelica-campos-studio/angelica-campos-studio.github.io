@@ -187,8 +187,8 @@ main { margin-left: 25vw; padding: 0 var(--gut); }
 .left .card img { box-sizing: border-box; border-bottom: 2px solid transparent; transition: opacity .3s ease, border-color .3s ease; }
 .left .card.active img { border-bottom-color: var(--link); }
 /* Intro 27 nov: nombre letra a letra + secuencia de sus 6 proyectos; salida con cortina (clip-path) hacia arriba */
-.intro { position: fixed; inset: 0; z-index: 50; background: var(--ink); color: var(--page); min-height: 100dvh; display: grid; grid-template-columns: 1fr; align-items: end; padding: 4vw; clip-path: circle(var(--dr, 150vmax) at var(--dx, 50%) var(--dy, 50%)); transition: clip-path .95s cubic-bezier(.7,0,.2,1); cursor: pointer; }
-.i-dot { display: inline-block; width: .2em; height: .2em; margin-left: .22em; border-radius: 50%; background: var(--page); box-shadow: 0 0 0 .035em var(--ink), 0 0 0 .06em var(--page); transform: scale(0); animation: dotIn .6s cubic-bezier(.34,1.56,.64,1) .55s forwards; vertical-align: baseline; }
+.intro { position: fixed; inset: 0; z-index: 50; background: #2d2f84; color: var(--page); min-height: 100dvh; display: grid; grid-template-columns: 1fr; align-items: end; padding: 4vw; clip-path: circle(var(--dr, 150vmax) at var(--dx, 50%) var(--dy, 50%)); transition: clip-path .95s cubic-bezier(.7,0,.2,1); cursor: pointer; }
+.i-dot { display: inline-block; width: .2em; height: .2em; margin-left: .22em; border-radius: 50%; background: var(--page); box-shadow: 0 0 0 .035em #2d2f84, 0 0 0 .06em var(--page); transform: scale(0); animation: dotIn .6s cubic-bezier(.34,1.56,.64,1) .55s forwards; vertical-align: baseline; }
 @keyframes dotIn { to { transform: none; } }
 .intro.out .w span, .intro.out .i-meta > p, .intro.out .i-meta::before { opacity: 0; transition: opacity .3s ease; animation-fill-mode: none; }
 .intro.out .w span { transform: none; }
