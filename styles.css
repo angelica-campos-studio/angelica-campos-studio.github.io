@@ -192,23 +192,23 @@ main { margin-left: 25vw; padding: 0 var(--gut); }
 
 /* Flechas de carrusel: círculo de marca semitransparente */
 .slideshow button { width: 44px; height: 44px; padding: 0; border-radius: 50%; color: var(--page); display: grid; place-items: center;
-  background: rgba(45,47,132,.55); box-shadow: inset 0 0 0 4.5px rgba(255,254,247,.7), inset 0 0 0 3px rgba(45,47,132,0);
+  background: rgba(4,18,208,.55); box-shadow: inset 0 0 0 4.5px rgba(255,254,247,.7), inset 0 0 0 3px rgba(4,18,208,0);
   transition: background .2s ease, transform .2s ease; }
-.slideshow button:hover { background: rgba(45,47,132,.9); transform: translateY(-50%) scale(1.06); }
+.slideshow button:hover { background: rgba(4,18,208,.9); transform: translateY(-50%) scale(1.06); }
 .slideshow button:active { transform: translateY(-50%) scale(.96); }
 .slideshow button svg { width: 46%; height: 46%; overflow: visible; stroke-width: 2; }
 .slideshow .prev { left: 12px; } .slideshow .next { right: 12px; }
 
 /* Intro: aparece suave, se queda, el texto sale y un círculo real se encoge hasta el punto */
-.intro { position: fixed; inset: 0; z-index: 50; min-height: 100dvh; display: flex; align-items: flex-end; padding: 4vw; background: #2d2f84; color: var(--page); cursor: pointer; }
+.intro { position: fixed; inset: 0; z-index: 50; min-height: 100dvh; display: flex; align-items: flex-end; padding: 4vw; background: #0412d0; color: var(--page); cursor: pointer; }
 .i-text { position: relative; z-index: 1; width: 100%; }
 .i-name { margin: 0; font-weight: 700; letter-spacing: -.055em; line-height: .86; font-size: clamp(56px, 17vw, 300px); }
 .i-name .w { display: block; white-space: nowrap; }
-.i-dot { display: inline-block; width: .2em; height: .2em; margin-left: .22em; border-radius: 50%; background: var(--page); box-shadow: 0 0 0 .035em #2d2f84, 0 0 0 .06em var(--page); }
+.i-dot { display: inline-block; width: .2em; height: .2em; margin-left: .22em; border-radius: 50%; background: var(--page); box-shadow: 0 0 0 .035em #0412d0, 0 0 0 .06em var(--page); }
 .i-meta { position: relative; display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 2vw; margin-top: 2vw; padding-top: 12px; border-top: 1px solid rgba(255,254,247,.3); }
 .i-role { margin: 0; font-size: clamp(14px, 1.25vw, 19px); font-weight: 500; line-height: 1.3; }
 .i-c { margin: 0; font-size: 13.41px; line-height: 1.3; font-weight: 700; }
-.i-circle { position: absolute; z-index: 0; border-radius: 50%; background: #2d2f84; transition: transform .8s cubic-bezier(.7,0,.2,1) .15s; }
+.i-circle { position: absolute; z-index: 0; border-radius: 50%; background: #0412d0; transition: transform .8s cubic-bezier(.7,0,.2,1) .15s; }
 .intro .i-name, .intro .i-meta { animation: iIn .9s cubic-bezier(.22,1,.36,1) .05s both; animation-play-state: paused; }
 .intro .i-meta { animation-delay: .25s; }
 .intro.go .i-name, .intro.go .i-meta { animation-play-state: running; }
@@ -224,13 +224,24 @@ main { margin-left: 25vw; padding: 0 var(--gut); }
   .i-meta { grid-template-columns: 1fr; row-gap: 10px; margin-top: 14px; }
   .i-role, .i-c span { white-space: nowrap; }
   .i-role { font-size: 15px; }
-  .slideshow button { width: 34px; height: 34px; background: rgba(45,47,132,.5); box-shadow: inset 0 0 0 3.5px rgba(255,254,247,.7); }
+  .slideshow button { width: 34px; height: 34px; background: rgba(4,18,208,.5); box-shadow: inset 0 0 0 3.5px rgba(255,254,247,.7); }
   .slideshow .prev { left: 8px; } .slideshow .next { right: 8px; }
   .bio p + p, .bio .contact { margin-top: 16px; }
-  .left .bio { display: flex; flex-direction: column; min-height: calc(100svh - 116px); }
-  .left .bio .jump { margin-top: auto; padding: 20px 0 24px; }
+  /* home móvil: índice pegado al pie de la pantalla, "View work" justo encima, aire en medio */
+  .left { display: flex; flex-direction: column; min-height: 100svh; padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px)); }
+  .left .bio { flex: 1; display: flex; flex-direction: column; }
+  .left .bio .jump { margin-top: auto; padding: 32px 0 14px; }
   .left .index { margin-top: 0; padding-bottom: 8px; }
   .left .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 12px; align-items: start; }
   .left .card span { display: block; font-size: 13px; line-height: 1.3; margin-top: 8px; }
 }
 @media (prefers-reduced-motion: reduce) { .intro { display: none; } .left .card img, .slideshow button { transition: none; } }
+/* 27 nov 2026 · índice: miniaturas en azul eléctrico #0412d0 (10,5:1 sobre blanco, mismo de la intro) → luces casi blancas con un toque rosado #f4ecf0, color al pasar o tocar; en móvil más pequeño y discreto */
+.left .card img { filter: url(#duo); transition: opacity .3s ease, border-color .3s ease, filter .3s ease; }
+.left .card:hover img, .left .card:focus-visible img, .left .card:active img, .left .card.active img { filter: none; }
+@media (max-width: 767px) {
+  .left .cards { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px 8px; }
+  .left .card span { font-size: 11px; line-height: 1.25; margin-top: 4px; opacity: .75; }
+}
+/* 27 nov 2026 · intro: la "p" de Campos ya no toca la línea de la información */
+.i-name { padding-bottom: .12em; }
