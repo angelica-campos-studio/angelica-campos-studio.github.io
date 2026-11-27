@@ -30,7 +30,16 @@
         setTimeout(function () { document.documentElement.classList.remove('intro-on'); intro.remove(); }, 1050);
       };
       var started = false;
-      var go = function () { if (started) return; started = true; intro.classList.add('go'); setTimeout(end, 2300); };
+      var loaded = document.readyState === 'complete';
+      if (!loaded) window.addEventListener('load', function () { loaded = true; });
+      var go = function () {
+        if (started) return; started = true; intro.classList.add('go');
+        var t1 = performance.now();
+        (function wait() {
+          var el = performance.now() - t1;
+          if ((el > 2300 && loaded) || el > 4500) end(); else setTimeout(wait, 100);
+        })();
+      };
       var ready = function () {
         var start = function () { requestAnimationFrame(function () { requestAnimationFrame(go); }); };
         if (document.visibilityState === 'visible') start();
