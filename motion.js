@@ -23,7 +23,12 @@
         intro.classList.add('out'); document.documentElement.classList.add('reveal');
         setTimeout(function () { document.documentElement.classList.remove('intro-on'); intro.remove(); }, 1150);
       };
-      setTimeout(end, 3200); intro.addEventListener('click', function (e) { if (!e.target.closest('a')) end(); });
+      var started = false;
+      var go = function () { if (started) return; started = true; intro.classList.add('go'); setTimeout(end, 3200); };
+      var ready = function () { requestAnimationFrame(function () { requestAnimationFrame(go); }); };
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(ready); else ready();
+      setTimeout(go, 1500);
+      intro.addEventListener('click', function (e) { if (!e.target.closest('a')) end(); });
     }
   }
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;

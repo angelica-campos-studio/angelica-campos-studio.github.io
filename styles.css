@@ -251,3 +251,6 @@ main { margin-left: 25vw; padding: 0 var(--gut); }
   .left .bio { display: flex; flex-direction: column; min-height: calc(100svh - var(--introTop, 116px)); }
   .left .bio .jump { margin-top: auto; padding: 24px 0 28px; }
 }
+
+/* 27 nov: la entrada espera a estar pintada (clase .go) para que no arranque a medias si la carga tarda */
+.intro:not(.go) *, .intro:not(.go) .i-meta::before { animation-play-state: paused !important; }
