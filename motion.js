@@ -20,24 +20,24 @@
       var end = function () {
         if (done) return; done = true;
         place();
-        var cs = intro.style, x = cs.getPropertyValue('--dx'), y = cs.getPropertyValue('--dy');
-        intro.style.clipPath = 'circle(' + cs.getPropertyValue('--dr') + ' at ' + x + ' ' + y + ')';
-        void intro.offsetWidth;
-        intro.style.transition = 'clip-path .9s cubic-bezier(.7,0,.2,1) .45s';
-        intro.style.clipPath = 'circle(0px at ' + x + ' ' + y + ')';
+        var cs = intro.style, x = parseFloat(cs.getPropertyValue('--dx')), y = parseFloat(cs.getPropertyValue('--dy')), R = parseFloat(cs.getPropertyValue('--dr'));
+        var c = document.createElement('div'); c.className = 'i-circle';
+        c.style.cssText = 'left:' + (x - R) + 'px;top:' + (y - R) + 'px;width:' + (2 * R) + 'px;height:' + (2 * R) + 'px';
+        intro.insertBefore(c, intro.firstChild); intro.style.background = 'transparent';
+        void c.offsetWidth; c.style.transform = 'scale(0)';
         document.documentElement.classList.remove('intro-hold');
         intro.classList.add('out'); document.documentElement.classList.add('reveal');
-        setTimeout(function () { document.documentElement.classList.remove('intro-on'); intro.remove(); }, 1450);
+        setTimeout(function () { document.documentElement.classList.remove('intro-on'); intro.remove(); }, 1050);
       };
       var started = false;
-      var go = function () { if (started) return; started = true; intro.classList.add('go'); setTimeout(end, 3000); };
+      var go = function () { if (started) return; started = true; intro.classList.add('go'); setTimeout(end, 2300); };
       var ready = function () {
         var start = function () { requestAnimationFrame(function () { requestAnimationFrame(go); }); };
         if (document.visibilityState === 'visible') start();
         else document.addEventListener('visibilitychange', function v() { if (document.visibilityState === 'visible') { document.removeEventListener('visibilitychange', v); start(); } });
       };
-      if (document.fonts && document.fonts.ready) document.fonts.ready.then(ready); else ready();
-      setTimeout(function () { if (document.visibilityState === 'visible') go(); }, 1500);
+      var fr = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve(); Promise.race([fr, new Promise(function (r) { setTimeout(r, 250); })]).then(ready);
+      setTimeout(function () { if (document.visibilityState === 'visible') go(); }, 600);
       intro.addEventListener('click', function (e) { if (!e.target.closest('a')) end(); });
     }
   }

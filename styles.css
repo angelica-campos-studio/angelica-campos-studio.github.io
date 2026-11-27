@@ -257,19 +257,23 @@ main { margin-left: 25vw; padding: 0 var(--gut); }
 
 /* 27 nov (su decisión): la entrada empieza estática; solo se anima la salida */
 .intro .i-name .w span, .intro .i-dot, .intro .i-meta > p, .intro .i-meta::before { transform: none; opacity: 1; }
-.intro .i-name, .intro .i-meta { animation: softIn 1.4s cubic-bezier(.22,1,.36,1) .15s both; }
-.intro .i-meta { animation-delay: .45s; }
+.intro .i-name, .intro .i-meta { animation: softIn .9s cubic-bezier(.22,1,.36,1) .05s both; }
+.intro .i-meta { animation-delay: .25s; }
 .intro .i-name .w span, .intro .i-dot, .intro .i-meta > p, .intro .i-meta::before { animation: none; }
-@keyframes softIn { from { opacity: 0; transform: translateY(14px); filter: blur(6px); } to { opacity: 1; transform: none; filter: none; } }
+@keyframes softIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
 /* 27 nov: salida espejo de la entrada. Los datos suben y se van, la línea se recoge, las palabras salen por arriba de su máscara y el azul se cierra en el punto */
-.intro.out .i-meta > p { animation: mOut .4s cubic-bezier(.64,0,.78,0) both; }
+.intro.out .i-meta > p { animation: mOut .35s cubic-bezier(.4,0,1,1) both; }
 .intro.out .i-meta > p:nth-child(2) { animation-delay: .04s; } .intro.out .i-meta > p:nth-child(3) { animation-delay: .08s; }
 .intro.out .i-meta::before { animation: lineOut .45s cubic-bezier(.64,0,.78,0) both; transform-origin: 100% 50%; }
-.intro.out .i-name .w span { animation: wOut .5s cubic-bezier(.64,0,.78,0) .05s both; }
-.intro.out .i-name .w + .w span { animation-delay: .15s; }
-.intro.out .i-dot { animation: dotOut .9s cubic-bezier(.7,0,.2,1) .45s both; }
+.intro.out .i-name .w span { animation: wOut .4s cubic-bezier(.4,0,1,1) both; }
+
+.intro.out .i-dot { animation: dotOut .8s cubic-bezier(.7,0,.2,1) .2s both; }
 @keyframes dotOut { from { transform: none; } to { transform: scale(0); } }
 @keyframes mOut { from { opacity: 1; transform: none; } to { opacity: 0; transform: translateY(-10px); } }
 @keyframes lineOut { from { transform: none; } to { transform: scaleX(0); } }
 @keyframes wOut { from { opacity: 1; transform: none; } to { opacity: 0; transform: translateY(-.25em); } }
 .intro.out .i-name .w { overflow: visible; }
+
+/* 27 nov: el cierre es un círculo real que escala por GPU (más fluido que animar clip-path) */
+.i-circle { position: absolute; border-radius: 50%; background: #2d2f84; z-index: 0; transform: scale(1); will-change: transform; transition: transform .8s cubic-bezier(.7,0,.2,1) .2s; }
+.intro-in, .i-text { position: relative; z-index: 1; }
