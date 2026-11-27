@@ -25,9 +25,13 @@
       };
       var started = false;
       var go = function () { if (started) return; started = true; intro.classList.add('go'); setTimeout(end, 3200); };
-      var ready = function () { requestAnimationFrame(function () { requestAnimationFrame(go); }); };
+      var ready = function () {
+        var start = function () { requestAnimationFrame(function () { requestAnimationFrame(go); }); };
+        if (document.visibilityState === 'visible') start();
+        else document.addEventListener('visibilitychange', function v() { if (document.visibilityState === 'visible') { document.removeEventListener('visibilitychange', v); start(); } });
+      };
       if (document.fonts && document.fonts.ready) document.fonts.ready.then(ready); else ready();
-      setTimeout(go, 1500);
+      setTimeout(function () { if (document.visibilityState === 'visible') go(); }, 1500);
       intro.addEventListener('click', function (e) { if (!e.target.closest('a')) end(); });
     }
   }

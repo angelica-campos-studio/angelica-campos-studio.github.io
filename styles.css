@@ -254,3 +254,8 @@ main { margin-left: 25vw; padding: 0 var(--gut); }
 
 /* 27 nov: la entrada espera a estar pintada (clase .go) para que no arranque a medias si la carga tarda */
 .intro:not(.go) *, .intro:not(.go) .i-meta::before { animation-play-state: paused !important; }
+
+/* 27 nov: flechas más ligeras */
+.slideshow button { background: rgba(45,47,132,.55); box-shadow: inset 0 0 0 3px rgba(45,47,132,0), inset 0 0 0 4.5px rgba(255,254,247,.7); backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px); transition: background .2s ease, transform .2s ease; }
+.slideshow button:hover { background: rgba(45,47,132,.9); }
+@media (max-width: 767px) { .slideshow button { background: rgba(45,47,132,.5); box-shadow: inset 0 0 0 2.5px rgba(45,47,132,0), inset 0 0 0 3.5px rgba(255,254,247,.7); } }
