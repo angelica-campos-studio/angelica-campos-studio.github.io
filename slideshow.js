@@ -15,7 +15,7 @@
     track.appendChild(first);
     track.insertBefore(last, track.children[0]);
 
-    var i = 1, busy = false, visible = false, focused = false, hovered = false, timer = null;
+    var i = 1, busy = false, near = false, visible = false, focused = false, hovered = false, timer = null;
     var all = track.children;
     function place(anim) {
       track.style.transition = anim ? 'transform ' + SPEED + 'ms ease' : 'none';
@@ -23,7 +23,17 @@
       for (var k = 0; k < all.length; k++) {
         var on = k === i;
         all[k].setAttribute('aria-hidden', on ? 'false' : 'true');
-        all[k].querySelectorAll('img').forEach(function (im) { if (Math.abs(k - i) <= 1) im.loading = 'eager'; });
+      }
+      load();
+    }
+    // Solo los carruseles cercanos a la pantalla piden sus imágenes (actual y vecinas), y quedan decodificadas antes de deslizar
+    function load() {
+      if (!near) return;
+      for (var k = Math.max(0, i - 1); k <= Math.min(all.length - 1, i + 1); k++) {
+        all[k].querySelectorAll('img').forEach(function (im) {
+          im.loading = 'eager';
+          if (im.decode) im.decode().catch(function () {});
+        });
       }
     }
     function go(k) {
@@ -64,7 +74,10 @@
     });
 
     new IntersectionObserver(function (es) {
-      visible = es[0].isIntersecting; restart();
+      near = es[0].isIntersecting; track.style.willChange = near ? 'transform' : 'auto'; load();
+    }, { rootMargin: '600px 0px' }).observe(show);
+    new IntersectionObserver(function (es) {
+      visible = es[0].intersectionRatio >= 0.25; restart();
     }, { threshold: 0.25 }).observe(show);
   });
 })();
