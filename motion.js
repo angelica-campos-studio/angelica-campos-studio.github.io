@@ -3,8 +3,7 @@
   var intro = document.querySelector('.intro');
   var reduce0 = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (intro) {
-    var seen = false; try { seen = sessionStorage.getItem('introSeen'); sessionStorage.setItem('introSeen', '1'); } catch (e) {}
-    if (reduce0 || seen) { intro.remove(); document.documentElement.classList.remove('intro-hold'); }
+    if (reduce0) { intro.remove(); document.documentElement.classList.remove('intro-hold'); }
     else {
       document.documentElement.classList.add('intro-on');
       var dot = intro.querySelector('.i-dot');
@@ -16,12 +15,10 @@
         intro.style.setProperty('--dx', x + 'px'); intro.style.setProperty('--dy', y + 'px');
         intro.style.setProperty('--dr', R + 'px'); intro.style.setProperty('--dd', '0px');
       };
-      requestAnimationFrame(function () { requestAnimationFrame(place); });
-      window.addEventListener('resize', place);
       var done = false;
       var end = function () {
         if (done) return; done = true;
-        place();
+        intro.style.transition = 'none'; place(); void intro.offsetWidth; intro.style.transition = '';
         document.documentElement.classList.remove('intro-hold');
         intro.classList.add('out'); document.documentElement.classList.add('reveal');
         setTimeout(function () { document.documentElement.classList.remove('intro-on'); intro.remove(); }, 1150);
@@ -34,9 +31,12 @@
     document.documentElement.classList.add('motion');
     var items = document.querySelectorAll('.project .mid, .project .right > *');
     var io = new IntersectionObserver(function (es) {
-      es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+      es.forEach(function (e) {
+        if (e.isIntersecting) e.target.classList.add('in');
+        else if (e.boundingClientRect.top > 0) e.target.classList.remove('in');
+      });
     }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
-    items.forEach(function (el) { if (el.getBoundingClientRect().top < window.innerHeight) el.classList.add('in'); else io.observe(el); });
+    items.forEach(function (el) { if (el.getBoundingClientRect().top < window.innerHeight) el.classList.add('in'); io.observe(el); });
   }
   var cards = {};
   document.querySelectorAll('.card').forEach(function (c) { cards[c.getAttribute('href').slice(1)] = c; });
